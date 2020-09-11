@@ -15,4 +15,12 @@ router.get('/', (req,res) => {
         })
 })
 
+router.post('/', (req,res) => {
+    db.insertTask(req.body)
+        .then(res.status(200).json(req.body))
+        .catch(err => {
+            console.log(err)
+        })
+})
+
 module.exports = router;

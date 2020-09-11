@@ -9,7 +9,8 @@ module.exports = {
     insertProject,
     findResources,
     insertResource,
-    getAllTasks
+    getAllTasks,
+    insertTask
 }
 
 function findProjects() {
@@ -31,15 +32,11 @@ function insertResource(resource) {
 }
 
 function getAllTasks() {
-    return db('tasks as t')
-        .select(
-            "t.id",
-            "t.task_description",
-            "p.project_name",
-            "p.description",
-            "t.notes",
-            "t.completed_status"
+    return db('tasks')
+        .join('projects', 'projects.id', 'tasks.project_id' )
+}
 
-        )
-        .join('projects as p', 'p.id', 't.project_id')
+function insertTask(task) {
+    return db('tasks')
+        .insert(task)
 }
